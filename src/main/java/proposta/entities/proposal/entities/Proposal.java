@@ -1,6 +1,7 @@
 package proposta.entities.proposal.entities;
 
 import proposta.configs.validation.cpfOrcnpj.CpfOrCpnj;
+import proposta.entities.card.entities.Card;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,6 +41,9 @@ public class Proposal {
     @Enumerated(EnumType.STRING)
     private StatusProposal statusProposal;
 
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Card card;
+
     public Proposal(String name,
                     String email,
                     String document,
@@ -77,4 +81,7 @@ public class Proposal {
         this.statusProposal = statusProposal;
     }
 
+    public void setCard(Card card) {
+        this.card = card;
+    }
 }
