@@ -37,6 +37,9 @@ public class Proposal {
     @Column(nullable = false)
     private BigDecimal salary;
 
+    @Enumerated(EnumType.STRING)
+    private StatusProposal statusProposal;
+
     public Proposal(String name,
                     String email,
                     String document,
@@ -57,4 +60,21 @@ public class Proposal {
     public Long getId() {
         return this.id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public StatusProposal getStatusProposal() {
+        return statusProposal;
+    }
+
+    public void setStatusProposal(StatusProposal statusProposal) {
+        this.statusProposal = statusProposal;
+    }
+
 }
