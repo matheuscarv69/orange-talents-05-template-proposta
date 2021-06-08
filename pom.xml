@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.matheuscarv69</groupId>
-    <artifactId>proposta</artifactId>
+    <artifactId>Proposta</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>proposta</name>
-    <description>Demo project for Spring Boot</description>
+    <description>API de Propostas</description>
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
@@ -34,17 +34,25 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
