@@ -1,7 +1,6 @@
 package proposta.entities.card.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -49,5 +48,17 @@ public class Card {
 
     public String getOwner() {
         return owner;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public BigDecimal getCredit_limit() {
+        return credit_limit;
+    }
+
+    public DueDate getDueDate() {
+        return dueDate;
     }
 }

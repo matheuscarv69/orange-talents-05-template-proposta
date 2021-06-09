@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import proposta.configs.validation.genericBodyReponse.GenericBodyResponseError;
+import proposta.configs.exception.customExceptions.ApiErrorException;
 import proposta.core.feignClients.proposalAnalysis.client.ProposalAnalysisClient;
 import proposta.core.feignClients.proposalAnalysis.request.ProposalAnalysisReq;
 import proposta.core.feignClients.proposalAnalysis.response.ProposalAnalysisRes;
@@ -37,15 +37,12 @@ public class CreateProposalController {
     private ProposalAnalysisClient proposalAnalysisClient;
 
     @PostMapping
-    public ResponseEntity<?> createProposal(@RequestBody @Valid ProposalReq proposalReq, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<URI> createProposal(@RequestBody @Valid ProposalReq proposalReq, UriComponentsBuilder uriBuilder) {
         Optional<Proposal> optProposal = proposalRepository.findByDocument(proposalReq.getDocument());
 
         // verifica se já existe uma proposta com o documento informado
         if (optProposal.isPresent()) {
-            return ResponseEntity
-                    .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body(new GenericBodyResponseError(HttpStatus.UNPROCESSABLE_ENTITY,
-                            "Já existe uma proposta com o documento informado"));
+            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Já existe uma proposta com o documento informado");
         }
 
         Proposal proposal = proposalReq.toModel();
@@ -56,7 +53,7 @@ public class CreateProposalController {
         // analisa se solicitante esta elegivel a ter um cartao, analise feita em api externa
         sendRequestAnalysisProposal(proposal);
 
-        URI uri = uriBuilder.path("/proposal/{id}").buildAndExpand(proposal.getId()).toUri();
+        URI uri = uriBuilder.path("/api/proposal/{id}").buildAndExpand(proposal.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
@@ -71,7 +68,7 @@ public class CreateProposalController {
             logger.warn("Solicitante analisado com restricao, status da proposta definido como nao elegivel");
             proposal.setStatusProposal(StatusProposal.NAO_ELEGIVEL);
 
-        }catch (FeignException exception){
+        } catch (FeignException exception) {
             logger.error("Algo de muito ruim aconteceu na analise do solicitante na api analise de proposta");
         }
 

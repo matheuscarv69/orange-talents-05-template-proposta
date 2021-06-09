@@ -77,6 +77,22 @@ public class Proposal {
         return statusProposal;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
     public void setStatusProposal(StatusProposal statusProposal) {
         this.statusProposal = statusProposal;
     }

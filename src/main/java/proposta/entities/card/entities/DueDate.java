@@ -35,4 +35,11 @@ public class DueDate {
         this.createAt = createAt;
     }
 
+    public Integer getDay() {
+        return day;
+    }
+
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
 }
