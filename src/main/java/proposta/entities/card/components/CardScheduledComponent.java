@@ -27,7 +27,7 @@ public class CardScheduledComponent {
 
     @Scheduled(fixedDelayString = "${delay.scheluded.card.association}")
     private void scheduledCardAssociation() {
-        logger.info("Envio de requisição para o sistema de cartões");
+        logger.info("Envio de requisicao para o sistema de cartoes");
         List<Proposal> elegiblesProposal = proposalRepository.findElegiblesProposals();
 
         try {
@@ -41,11 +41,11 @@ public class CardScheduledComponent {
                 proposalRepository.save(proposal);
 
                 //substring para nao expor dados sensiveis
-                logger.info("Cartão criado idCard:{}, titular:{}", card.getId().substring(0, 3), card.getOwner().substring(0, 3));
+                logger.info("Cartao criado idCard:{}, titular:{}", card.getId().substring(0, 3), card.getOwner().substring(0, 3));
             });
 
         } catch (FeignException exception) {
-            logger.warn("Deu ruim com uma request pro sistema de cartões, corre aqui!");
+            logger.warn("Deu ruim com uma request pro sistema de cartoes, corre aqui!");
         }
     }
 

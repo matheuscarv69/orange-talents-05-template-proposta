@@ -9,7 +9,7 @@ import proposta.core.feignClients.proposalAnalysis.response.ProposalAnalysisRes;
 public interface ProposalAnalysisClient {
 
     // consumes e produces por padrao sao application/json
-    @PostMapping()
+    @PostMapping("/api/solicitacao")
     ProposalAnalysisRes analyzeProposal(ProposalAnalysisReq proposalAnalysisReq);
 
 }

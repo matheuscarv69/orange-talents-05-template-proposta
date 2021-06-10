@@ -1,5 +1,60 @@
 version: '3'
 services:
+  # Banco de dados usado na aplicacao local
+  postgres-propostas:
+    image: 'postgres:alpine'
+    volumes:
+      - postgres-propostas-volume:/var/lib/postgresql/data
+    ports:
+      - 5543:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+      - propostas-network
+
+  # Api de propostas
+  api-propostas:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      POSTGRES_HOST: postgres-propostas:5432
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_SCHEMA: desafio
+      API_ANALYSIS_PROPOSAL: http://analise:9999
+      API_ACCOUNTS: http://contas:8888
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres-propostas
+#    restart: always
+    networks:
+      - propostas-network
+
+  analise:
+    image: 'zupacademy/analise-financeira'
+    ports:
+      - 9999:9999
+    environment:
+      SERVER_PORT: 9999
+      LOG_LEVEL: INFO
+      URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+    networks:
+      - propostas-network
+
+  contas:
+    image: 'zupacademy/contas'
+    ports:
+      - 8888:8888
+    environment:
+      SERVER_PORT: 8888
+      LOG_LEVEL: INFO
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+    networks:
+      - propostas-network
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
@@ -34,17 +89,6 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_HOST: postgres
 
-  # Banco de dados usado na aplicacao local
-  postgres-proposta:
-    image: 'postgres:alpine'
-    volumes:
-      - postgres-proposta-volume:/var/lib/postgresql/data
-    ports:
-      - 5433:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-
   keycloak:
     image: jboss/keycloak
     ports:
@@ -72,25 +116,6 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
-
-  analise:
-    image: 'zupacademy/analise-financeira'
-    ports:
-      - 9999:9999
-    environment:
-      SERVER_PORT: 9999
-      LOG_LEVEL: INFO
-      URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
-      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-
-  contas:
-    image: 'zupacademy/contas'
-    ports:
-      - 8888:8888
-    environment:
-      SERVER_PORT: 8888
-      LOG_LEVEL: INFO
-      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
 
   transacoes:
     image: 'zupacademy/transacoes'
@@ -149,4 +174,8 @@ volumes:
   grafana-volume:
   prometheus-volume:
   postgres-volume:
-  postgres-proposta-volume:
+  postgres-propostas-volume:
+
+networks:
+  propostas-network:
+    driver: bridge
