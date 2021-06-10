@@ -1,10 +1,15 @@
 package proposta.entities.card.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.http.HttpStatus;
+import proposta.configs.exception.customExceptions.ApiErrorException;
+import proposta.entities.biometry.controllers.Biometry;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Card {
@@ -25,6 +30,9 @@ public class Card {
     @ManyToOne(cascade = CascadeType.MERGE)
     private DueDate dueDate;
 
+    @OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
+    private Set<Biometry> biometries = new HashSet<>();
+
     // only hibernate
     @Deprecated
     public Card() {
@@ -40,6 +48,17 @@ public class Card {
         this.owner = owner;
         this.credit_limit = credit_limit;
         this.dueDate = dueDate;
+    }
+
+    public void addBiometry(Biometry biometry) {
+
+        biometries.forEach(biometrie -> {
+            if (biometrie.equals(biometry)) {
+                throw new ApiErrorException(HttpStatus.BAD_REQUEST, "Fingerprint já está associada cadastrada");
+            }
+        });
+
+        this.biometries.add(biometry);
     }
 
     public String getId() {
@@ -61,4 +80,5 @@ public class Card {
     public DueDate getDueDate() {
         return dueDate;
     }
+
 }

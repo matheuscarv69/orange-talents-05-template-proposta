@@ -27,7 +27,7 @@ public class CardScheduledComponent {
 
     @Scheduled(fixedDelayString = "${delay.scheluded.card.association}")
     private void scheduledCardAssociation() {
-        logger.info("Envio de requisicao para o sistema de cartoes");
+//        logger.info("Envio de requisicao para o sistema de cartoes");
         List<Proposal> elegiblesProposal = proposalRepository.findElegiblesProposals();
 
         try {
