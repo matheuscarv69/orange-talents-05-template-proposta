@@ -10,8 +10,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-    networks:
-      - propostas-network
 
   # Api de propostas
   api-propostas:
@@ -25,13 +23,15 @@ services:
       POSTGRES_SCHEMA: desafio
       API_ANALYSIS_PROPOSAL: http://analise:9999
       API_ACCOUNTS: http://contas:8888
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/desafio-proposta
+      KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/desafio-proposta/protocol/openid-connect/certs
     ports:
       - 8080:8080
     depends_on:
       - postgres-propostas
 #    restart: always
-    networks:
-      - propostas-network
+#    networks:
+#      - propostas-network
 
   analise:
     image: 'zupacademy/analise-financeira'
@@ -42,8 +42,8 @@ services:
       LOG_LEVEL: INFO
       URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-    networks:
-      - propostas-network
+#    networks:
+#      - propostas-network
 
   contas:
     image: 'zupacademy/contas'
@@ -53,8 +53,8 @@ services:
       SERVER_PORT: 8888
       LOG_LEVEL: INFO
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-    networks:
-      - propostas-network
+#    networks:
+#      - propostas-network
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
@@ -116,6 +116,8 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
+#    networks:
+#      - propostas-network
 
   transacoes:
     image: 'zupacademy/transacoes'
@@ -175,7 +177,3 @@ volumes:
   prometheus-volume:
   postgres-volume:
   postgres-propostas-volume:
-
-networks:
-  propostas-network:
-    driver: bridge
