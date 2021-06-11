@@ -17,6 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.POST, "/api/proposal/**").hasAuthority("SCOPE_propostas-scope:write")
                         .antMatchers(HttpMethod.GET, "/api/proposal/**").hasAuthority("SCOPE_propostas-scope:read")
                         .antMatchers(HttpMethod.POST, "/api/biometry/**").hasAuthority("SCOPE_propostas-scope:write")
+                        .antMatchers(HttpMethod.PUT, "/api/card/**").hasAuthority("SCOPE_propostas-scope:write")
                         .anyRequest().authenticated()
         ).csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
