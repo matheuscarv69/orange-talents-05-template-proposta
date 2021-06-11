@@ -107,4 +107,8 @@ public class Card {
     public DueDate getDueDate() {
         return dueDate;
     }
+
+    public StatusBlock getStatusBlock() {
+        return statusBlock;
+    }
 }
