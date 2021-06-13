@@ -6,7 +6,4 @@ public interface EventsForBlockCard {
 
     void sendNotificationCardBlocking(String idCard, Card card);
 
-    String getClientIp();
-
-
 }

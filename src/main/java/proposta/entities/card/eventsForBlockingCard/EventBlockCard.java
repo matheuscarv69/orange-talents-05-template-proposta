@@ -14,8 +14,7 @@ import proposta.entities.card.entities.BlockCard;
 import proposta.entities.card.entities.Card;
 import proposta.entities.card.entities.StatusBlock;
 import proposta.entities.card.repositories.CardRepository;
-
-import javax.servlet.http.HttpServletRequest;
+import proposta.utils.GetDatasRequest;
 
 @Primary
 @Component
@@ -27,7 +26,7 @@ public class EventBlockCard implements EventsForBlockCard {
     private CardRepository cardRepository;
 
     @Autowired
-    private HttpServletRequest servletRequest;
+    private GetDatasRequest dataRequest;
 
     @Autowired
     private AccountsClient accountsClient;
@@ -44,8 +43,8 @@ public class EventBlockCard implements EventsForBlockCard {
 
             logger.info("O status de bloqueio retornado do client foi {}", notifyCardBlockingRes.getStatusBlockCardRes());
 
-            String clientIp = getClientIp();
-            String userAgent = servletRequest.getHeader("User-Agent");
+            String clientIp = dataRequest.getClientIp();
+            String userAgent = dataRequest.getUserAgent();
 
             BlockCard blockCard = new BlockCard(clientIp, userAgent, card);
             card.setBlock(StatusBlock.BLOQUEADO);
@@ -61,20 +60,4 @@ public class EventBlockCard implements EventsForBlockCard {
         }
     }
 
-    /**
-     * Função para pegar o ip do client que realizou a request,
-     * o header x-forwarded-for é para pegar o ip real do client caso
-     * o mesmo utilize algum proxy, caso o seu retorno seja null,
-     * é ip do client é buscado com o getRemoteAddr
-     */
-    @Override
-    public String getClientIp() {
-        String clientIp = servletRequest.getHeader("X-FORWARDED-FOR");
-
-        if (clientIp == null) {
-            clientIp = servletRequest.getRemoteAddr();
-        }
-
-        return clientIp;
-    }
 }
