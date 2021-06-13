@@ -15,6 +15,7 @@ import proposta.configs.exception.customExceptions.ApiErrorException;
 import proposta.core.feignClients.proposalAnalysis.client.ProposalAnalysisClient;
 import proposta.core.feignClients.proposalAnalysis.request.ProposalAnalysisReq;
 import proposta.core.feignClients.proposalAnalysis.response.ProposalAnalysisRes;
+import proposta.core.metrics.ProposalMetrics;
 import proposta.entities.proposal.entities.Proposal;
 import proposta.entities.proposal.entities.StatusProposal;
 import proposta.entities.proposal.repositories.ProposalRepository;
@@ -36,6 +37,9 @@ public class CreateProposalController {
     @Autowired
     private ProposalAnalysisClient proposalAnalysisClient;
 
+    @Autowired
+    private ProposalMetrics proposalMetrics;
+
     @PostMapping
     public ResponseEntity<URI> createProposal(@RequestBody @Valid ProposalReq proposalReq, UriComponentsBuilder uriBuilder) {
         Optional<Proposal> optProposal = proposalRepository.findByDocument(proposalReq.getDocument());
@@ -47,6 +51,8 @@ public class CreateProposalController {
 
         Proposal proposal = proposalReq.toModel();
         proposalRepository.save(proposal);
+        // metrica - incrementa o contador de propostas criadas
+        proposalMetrics.incrementProposalsCounter();
 
         logger.info("Proposta id={}, solicitante={} criada com sucesso!", proposal.getId(), proposal.getName());
 
