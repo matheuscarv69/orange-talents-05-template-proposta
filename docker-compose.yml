@@ -118,7 +118,7 @@ services:
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
 #      Descomentar essa variavel caso queira executar a api no compose
 #      O acesso ao painel admin via navegador é perdido quando ela esta ativa
-      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
+#      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
 #    networks:
 #      - propostas-network
 

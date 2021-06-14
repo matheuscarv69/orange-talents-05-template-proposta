@@ -4,8 +4,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import proposta.core.feignClients.accounts.request.CardWalletClientReq;
 import proposta.core.feignClients.accounts.request.NotifyTravelNoticeReq;
 import proposta.core.feignClients.accounts.request.ResponsibleSystemReq;
+import proposta.core.feignClients.accounts.response.CardWalletClientRes;
 import proposta.core.feignClients.accounts.response.CardRes;
 import proposta.core.feignClients.accounts.response.NotifyCardBlockingRes;
 import proposta.core.feignClients.accounts.response.NotifyTravelNoticeRes;
@@ -25,6 +27,8 @@ public interface AccountsClient {
     NotifyTravelNoticeRes notifyTravelNotice(@PathVariable String idCard,
                                                  NotifyTravelNoticeReq notifyTravelNoticeReq);
 
-
+    @PostMapping("/api/cartoes/{idCard}/carteiras")
+    CardWalletClientRes associateCardWallet(@PathVariable String idCard,
+                                            CardWalletClientReq cardWalletClientReq);
 
 }

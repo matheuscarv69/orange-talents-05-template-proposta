@@ -1,4 +1,4 @@
-package proposta.entities.card.entities;
+package proposta.entities.card.entities.enums;
 
 public enum StatusBlock {
 

@@ -40,6 +40,7 @@ public class EventTravelNotice implements EventsForTravelNotice {
     @Override
     public void sendNotificationTravelNotice(Card card,
                                              TravelNoticeReq travelNoticeCardReq) {
+
         try {
             NotifyTravelNoticeReq notifyTravelNoticeReq = travelNoticeCardReq.toNotify();
             NotifyTravelNoticeRes notifyTravelNoticeRes = accountsClient.notifyTravelNotice(card.getId(),

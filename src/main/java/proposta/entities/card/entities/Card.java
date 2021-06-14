@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 import proposta.configs.exception.customExceptions.ApiErrorException;
 import proposta.entities.biometry.entities.Biometry;
+import proposta.entities.card.entities.enums.StatusBlock;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -47,6 +48,9 @@ public class Card {
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<BlockCard> blockCardList = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<CardWallet> cardWallets = new HashSet<>();
+
     // only hibernate
     @Deprecated
     public Card() {
@@ -86,6 +90,16 @@ public class Card {
 
     public void addBlockCard(BlockCard blockCard) {
         this.blockCardList.add(blockCard);
+    }
+
+    public void addAssociateCardWallet(CardWallet cardWallet) {
+        this.cardWallets.add(cardWallet);
+    }
+
+    public boolean walletExists(CardWallet cardWallet) {
+
+        return cardWallets.contains(cardWallet);
+
     }
 
     public String getId() {

@@ -2,6 +2,7 @@ package proposta.entities.proposal.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import proposta.entities.card.entities.Card;
 import proposta.entities.proposal.entities.Proposal;
 
 import java.util.List;
@@ -12,5 +13,8 @@ public interface ProposalRepository extends JpaRepository<Proposal, Long> {
 
     @Query("select pro from Proposal pro where pro.statusProposal = 'ELEGIVEL' and pro.card is null ")
     List<Proposal> findElegiblesProposals();
+//
+//    @Query("select pro from Proposal pro where pro.card.id = ?1")
+//    Optional<Proposal> findCardById(String idCard);
 
 }
