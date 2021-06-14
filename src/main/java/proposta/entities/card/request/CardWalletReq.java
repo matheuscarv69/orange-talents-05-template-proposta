@@ -5,9 +5,17 @@ import proposta.core.feignClients.accounts.request.CardWalletClientReq;
 import proposta.entities.card.entities.CardWallet;
 import proposta.entities.card.entities.enums.Wallets;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class CardWalletReq {
 
+    @NotBlank
+    @Email
     private String email;
+
+    @NotNull
     private Wallets wallet;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -25,4 +33,7 @@ public class CardWalletReq {
         return new CardWalletClientReq(email, wallet.toString());
     }
 
+    public Wallets getWallet() {
+        return wallet;
+    }
 }
