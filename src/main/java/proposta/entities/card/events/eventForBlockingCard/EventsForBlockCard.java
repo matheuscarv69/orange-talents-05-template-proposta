@@ -1,4 +1,4 @@
-package proposta.entities.card.eventsForBlockingCard;
+package proposta.entities.card.events.eventForBlockingCard;
 
 import proposta.entities.card.entities.Card;
 

@@ -1,6 +1,7 @@
 package proposta.core.feignClients.accounts.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import proposta.core.feignClients.accounts.response.enums.StatusBlockCardRes;
 
 public class NotifyCardBlockingRes {
 

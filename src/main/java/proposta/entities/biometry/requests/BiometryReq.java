@@ -2,7 +2,7 @@ package proposta.entities.biometry.requests;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import proposta.configs.validation.isBase64.IsBase64;
-import proposta.entities.biometry.controllers.Biometry;
+import proposta.entities.biometry.entities.Biometry;
 import proposta.entities.card.entities.Card;
 
 import javax.validation.constraints.NotBlank;

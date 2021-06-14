@@ -1,4 +1,4 @@
-package proposta.entities.biometry.controllers;
+package proposta.entities.biometry.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import proposta.entities.card.entities.Card;

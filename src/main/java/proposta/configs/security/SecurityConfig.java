@@ -16,7 +16,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests
                         .antMatchers(HttpMethod.POST, "/api/proposal/**").hasAuthority("SCOPE_propostas-scope:write")
                         .antMatchers(HttpMethod.GET, "/api/proposal/**").hasAuthority("SCOPE_propostas-scope:read")
-                        .antMatchers(HttpMethod.POST, "/api/biometry/**").hasAuthority("SCOPE_propostas-scope:write")
                         .antMatchers(HttpMethod.PUT, "/api/card/**").hasAuthority("SCOPE_propostas-scope:write")
                         .antMatchers(HttpMethod.POST, "/api/card/**").hasAuthority("SCOPE_propostas-scope:write")
                         .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()

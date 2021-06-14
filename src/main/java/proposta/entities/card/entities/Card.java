@@ -3,7 +3,7 @@ package proposta.entities.card.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 import proposta.configs.exception.customExceptions.ApiErrorException;
-import proposta.entities.biometry.controllers.Biometry;
+import proposta.entities.biometry.entities.Biometry;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import proposta.configs.exception.customExceptions.ApiErrorException;
+import proposta.entities.biometry.entities.Biometry;
 import proposta.entities.biometry.repositories.BiometryRepository;
 import proposta.entities.biometry.requests.BiometryReq;
 import proposta.entities.card.entities.Card;
@@ -16,7 +17,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/biometry")
+@RequestMapping("/api/card/")
 public class CreateBiometry {
 
     @Autowired
@@ -25,7 +26,7 @@ public class CreateBiometry {
     @Autowired
     private BiometryRepository biometryRepository;
 
-    @PostMapping("/{idCard}")
+    @PostMapping("/{idCard}/biometry")
     public ResponseEntity<?> createBiometry(@PathVariable String idCard,
                                             @Valid @RequestBody BiometryReq biometryReq,
                                             UriComponentsBuilder uriBuilder) {

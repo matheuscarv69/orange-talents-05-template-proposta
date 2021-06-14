@@ -1,11 +1,13 @@
-package proposta.entities.card.eventsForBlockingCard;
+package proposta.entities.card.events.eventForBlockingCard;
 
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import proposta.configs.exception.customExceptions.ApiErrorException;
 import proposta.core.feignClients.accounts.client.AccountsClient;
 import proposta.core.feignClients.accounts.request.ResponsibleSystemReq;
 import proposta.core.feignClients.accounts.response.NotifyCardBlockingRes;
@@ -34,7 +36,7 @@ public class EventBlockCard implements EventsForBlockCard {
     /**
      * Envia a notificacao de bloqueio de cartao ao sistema de cartoes
      * e salva o bloqueio em caso de sucesso
-     * */
+     */
     @Override
     public void sendNotificationCardBlocking(String idCard, Card card) {
         try {
@@ -55,8 +57,7 @@ public class EventBlockCard implements EventsForBlockCard {
 
             logger.info("Cartao bloqueado com sucesso, status:{}", card.getStatusBlock());
         } catch (FeignException exception) {
-            logger.warn("Deu erro no envio da notificação de bloqueio de cartao");
-            exception.printStackTrace();
+            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Ocorreu um erro no Sistema de cartões ao enviar a notificação de bloqueio de cartao");
         }
     }
 
