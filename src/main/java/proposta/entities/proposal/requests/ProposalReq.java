@@ -45,6 +45,10 @@ public class ProposalReq {
         return new Proposal(name, email, document, address, salary);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public String getDocument() {
         return this.document;
     }

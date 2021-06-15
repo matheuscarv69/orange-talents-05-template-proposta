@@ -1,6 +1,8 @@
 package proposta.entities.proposal.controllers;
 
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,16 @@ public class CreateProposalController {
     @Autowired
     private ProposalMetrics proposalMetrics;
 
+    @Autowired
+    private Tracer tracer;
+
     @PostMapping
     public ResponseEntity<URI> createProposal(@RequestBody @Valid ProposalReq proposalReq, UriComponentsBuilder uriBuilder) {
+        // Span e tag custom para o jaeger
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.email", proposalReq.getEmail());
+        activeSpan.setBaggageItem("user.email", proposalReq.getEmail());
+
         Optional<Proposal> optProposal = proposalRepository.findByDocument(proposalReq.getDocument());
 
         // verifica se já existe uma proposta com o documento informado
