@@ -36,8 +36,6 @@ services:
     depends_on:
       - postgres-propostas
 #    restart: always
-#    networks:
-#      - propostas-network
 
   analise:
     image: 'zupacademy/analise-financeira'
@@ -48,8 +46,6 @@ services:
       LOG_LEVEL: INFO
       URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-#    networks:
-#      - propostas-network
 
   contas:
     image: 'zupacademy/contas'
@@ -59,8 +55,6 @@ services:
       SERVER_PORT: 8888
       LOG_LEVEL: INFO
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
-#    networks:
-#      - propostas-network
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
@@ -125,8 +119,6 @@ services:
 #      Descomentar essa variavel caso queira executar a api no compose
 #      O acesso ao painel admin via navegador é perdido quando ela esta ativa
       KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
-#    networks:
-#      - propostas-network
 
   transacoes:
     image: 'zupacademy/transacoes'
@@ -157,10 +149,13 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/etc/prometheus/
-    network_mode: bridge
+#    network_mode: bridge
     ports:
       - "9090:9090"
+    depends_on:
+      - api-propostas
 
   grafana:
     image: grafana/grafana
