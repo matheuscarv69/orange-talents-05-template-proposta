@@ -1,4 +1,4 @@
-package proposta.utils;
+package proposta.entities.card.utils;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

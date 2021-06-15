@@ -16,7 +16,7 @@ import proposta.entities.card.entities.Card;
 import proposta.entities.card.entities.TravelNotice;
 import proposta.entities.card.repositories.TravelNoticeRepository;
 import proposta.entities.card.request.TravelNoticeReq;
-import proposta.utils.GetDatasRequest;
+import proposta.entities.card.utils.GetDatasRequest;
 
 @Primary
 @Component

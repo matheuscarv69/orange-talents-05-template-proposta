@@ -16,7 +16,7 @@ import proposta.entities.card.entities.BlockCard;
 import proposta.entities.card.entities.Card;
 import proposta.entities.card.entities.enums.StatusBlock;
 import proposta.entities.card.repositories.CardRepository;
-import proposta.utils.GetDatasRequest;
+import proposta.entities.card.utils.GetDatasRequest;
 
 @Primary
 @Component

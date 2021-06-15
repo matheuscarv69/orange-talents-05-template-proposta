@@ -27,6 +27,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
+import static proposta.entities.proposal.utils.EncryptorUtils.textEncrypt;
+
 @RestController
 @RequestMapping("/api/proposal")
 public class CreateProposalController {
@@ -46,21 +48,22 @@ public class CreateProposalController {
     private Tracer tracer;
 
     @PostMapping
-    public ResponseEntity<URI> createProposal(@RequestBody @Valid ProposalReq proposalReq, UriComponentsBuilder uriBuilder) {
-        // Span e tag custom para o jaeger
+    public ResponseEntity<URI> createProposal(@RequestBody @Valid ProposalReq proposalReq,
+                                              UriComponentsBuilder uriBuilder) {
+        // Span para o Jaeger
         Span activeSpan = tracer.activeSpan();
         activeSpan.setTag("user.email", proposalReq.getEmail());
         activeSpan.setBaggageItem("user.email", proposalReq.getEmail());
 
-        Optional<Proposal> optProposal = proposalRepository.findByDocument(proposalReq.getDocument());
+        // Criptografa o documento vindo da requisicao
+        String documentEncrypted = textEncrypt(proposalReq.getDocument());
 
         // verifica se já existe uma proposta com o documento informado
-        if (optProposal.isPresent()) {
-            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Já existe uma proposta com o documento informado");
-        }
+        checkDocumentExists(documentEncrypted);
 
-        Proposal proposal = proposalReq.toModel();
+        Proposal proposal = proposalReq.toModel(documentEncrypted);
         proposalRepository.save(proposal);
+
         // metrica - incrementa o contador de propostas criadas
         proposalMetrics.incrementProposalsCounter();
 
@@ -71,6 +74,17 @@ public class CreateProposalController {
 
         URI uri = uriBuilder.path("/api/proposal/{id}").buildAndExpand(proposal.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    // Essa logica esta um tanto obsela por causa da ultima feature
+    // analisar como fazer a verificacao se o documento informado ja existe no banco
+    private void checkDocumentExists(String documentEncrypted) {
+        Optional<Proposal> optProposal = proposalRepository.findByDocument(documentEncrypted);
+
+        // verifica se já existe uma proposta com o documento informado
+        if (optProposal.isPresent()) {
+            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Já existe uma proposta com o documento informado");
+        }
     }
 
     private void sendRequestAnalysisProposal(Proposal proposal) {
@@ -92,6 +106,5 @@ public class CreateProposalController {
         logger.info("Proposta id={}, solicitante={} atualizada com o status={} com sucesso!", proposal.getId(), proposal.getName(), proposal.getStatusProposal());
         proposalRepository.save(proposal);
     }
-
 
 }

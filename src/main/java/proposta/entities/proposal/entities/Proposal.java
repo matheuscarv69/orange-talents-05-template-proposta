@@ -25,7 +25,6 @@ public class Proposal {
     private String email;
 
     @NotBlank
-    @CpfOrCpnj
     @Column(nullable = false)
     private String document;
 

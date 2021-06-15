@@ -41,8 +41,8 @@ public class ProposalReq {
         this.salary = salary;
     }
 
-    public Proposal toModel() {
-        return new Proposal(name, email, document, address, salary);
+    public Proposal toModel(String documentEncrypted) {
+        return new Proposal(name, email, documentEncrypted, address, salary);
     }
 
     public String getEmail() {
