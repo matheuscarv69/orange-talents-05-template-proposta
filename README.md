@@ -56,7 +56,7 @@ Esse serviço tem alguns endpoints que estão configurados no aplicativo **Insom
 baixar o workspace de requests utilizados nesse projeto.
 <br/>
 <br/>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Microservice-propostas&uri=https%3A%2F%2Fgist.github.com%2Fmatheuscarv69%2Fab9bf5849f9351619fa2acaeeb1e1658)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=&uri=https%3A%2F%2Fgist.githubusercontent.com%2Fmatheuscarv69%2Fab9bf5849f9351619fa2acaeeb1e1658%2Fraw%2F47ab2faca37c6dc43a7c896896c785246ffed337%2Fmicroservice-propostas.yaml)
 
 ## 🚀 Tecnologias 👩‍🚀
 
