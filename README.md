@@ -7,7 +7,7 @@ Este projeto é um desafio proposto pela time da Zup Academy para a turma do Ora
 ![GitHub](https://img.shields.io/github/license/matheuscarv69/orange-talents-05-template-proposta?color=orange)
 
 ## 🤔 O que é o Microservice de Propostas?
----
+
 Esse serviço é responsável por simular o fluxo de solicitação de cartões mediante uma proposta enviada pelo cliente,
 isso é feito por meio de integrações com outros serviços externos.
 
@@ -17,7 +17,6 @@ Basicamente o fluxo principal de uma proposta consiste em:
 - Associação de um cartão, caso a proposta seja elegível de acordo com a regra de negócio do sistema externo.
 
 ## 🛠 Pré-Requisitos
----
 
 ### 📍 Local
 
@@ -38,7 +37,6 @@ executada no docker. Os requisitos para isso são:
 - [Docker-compose](https://docs.docker.com/compose/install/)
 
 ## 🎲 Executando a API com o docker-compose
----
 Com esse repositório já clonado em sua máquina e com todos os pré-requisitos atendidos.
 
 1. Você deve ir até a raiz do projeto onde o arquivo **docker-compose.yml** está.
@@ -53,7 +51,7 @@ docker-compose up -d
 5. Com isso sua aplicação já está em execução
 
 ## 📝Fazendo requisições - Insomnia
----
+
 Esse serviço tem alguns endpoints que estão configurados no aplicativo **Insomnia**, clicando no botão abaixo você pode
 baixar o workspace de requests utilizados nesse projeto.
 <br/>
@@ -61,7 +59,7 @@ baixar o workspace de requests utilizados nesse projeto.
 [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Microservice-propostas&uri=https%3A%2F%2Fliveestacio-my.sharepoint.com%2F%3Au%3A%2Fg%2Fpersonal%2F201803031905_alunos_estacio_br%2FEUS5VfhwQtxJmItfYdOA5jwBGIjM9XGvqkn0ieOkCVhL8A%3Fe%3DfcE4e9)
 
 ## 🚀 Tecnologias 👩‍🚀
----
+
 As seguintes tecnologias foram utilizadas e/ou utilizadas no desenvolvimento do projeto.
 
 - Spring Boot 2.3.11
@@ -76,8 +74,8 @@ As seguintes tecnologias foram utilizadas e/ou utilizadas no desenvolvimento do 
 - Prometheus
 - Postgres
 
-### 👨🏻‍💻 Autor
----
+## 👨🏻‍💻 Autor
+
 <br>
 <a href="https://github.com/matheuscarv69">
  <img style="border-radius: 35%;" src="https://avatars1.githubusercontent.com/u/55814214?s=460&u=ffb1e928527a55f53df6e0d323c2fd7ba92fe0c3&v=4" width="100px;" alt=""/>
@@ -95,5 +93,4 @@ Feito por Matheus Carvalho, entre em contato!✌🏻
   </p>
 
 ## 📝 Licença
----
 Este projeto esta sob a licença Apache-2.0 .
